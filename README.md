@@ -7,7 +7,7 @@
 [![License](https://poser.pugx.org/ziwot/cake-chartscss/license)](https://packagist.org/packages/ziwot/cake-chartscss)
 [![PHP Version Require](https://poser.pugx.org/ziwot/cake-chartscss/require/php)](https://packagist.org/packages/ziwot/cake-chartscss)
 
-ChartsCss plugin for CakePHP
+[ChartsCss](https://chartscss.org/) plugin for CakePHP
 
 Install with:
 
@@ -48,7 +48,7 @@ Example Usage:
  * @var \App\View\AppView $this
  */
 
-$this->append('css', $this->Html->css('ChartsCss.charts.min', ['block' => false]));
+$this->append('css', $this->Html->css('ChartsCss.charts.min'));
 
 $data = [
    2020 => '$ .6',
