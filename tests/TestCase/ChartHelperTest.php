@@ -9,7 +9,6 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use ChartsCss\View\Helper\ChartHelper;
 use Generator;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 class ChartHelperTest extends TestCase
 {
@@ -34,7 +33,9 @@ class ChartHelperTest extends TestCase
         $this->Chart = new ChartHelper($this->View);
     }
 
-    #[DataProvider('chartProvider')]
+    /**
+     * @dataProvider chartProvider
+     */
     public function testMake($data, $options, $expectedHtml)
     {
         $this->assertXmlStringEqualsXmlString(

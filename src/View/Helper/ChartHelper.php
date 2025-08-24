@@ -20,12 +20,12 @@ class ChartHelper extends Helper
      */
     public function make(array $data, array $options): string
     {
-        $max = max(new Collection($data)->map(fn($v) => $this->floatval($v))->toList());
+        $max = max((new Collection($data))->map(fn($v) => $this->floatval($v))->toList());
 
         if (strstr($options['table'], 'area') || strstr($options['table'], 'line')) {
             $data = array_combine(
                 array_keys($data),
-                new Collection($data)
+                (new Collection($data))
                     ->take(count($data) - 1)
                     ->prepend([0])
                     ->zip($data)
@@ -33,7 +33,7 @@ class ChartHelper extends Helper
             );
         }
 
-        $data = new Collection($data)
+        $data = (new Collection($data))
             ->map(fn($v, $k) => $this->Html->tableRow(
                 ($k ? "<th>$k</th>" : '') .
                 $this->Html->tableCell(
