@@ -20,14 +20,15 @@ class ChartHelper extends Helper
      */
     public function make(array $data, array $options): string
     {
-        $max = max((new Collection($data))->map(fn($v) => $this->floatval($v))->toList());
+        $max = max(collection($data)->map(fn($v) => $this->floatval($v))->toList());
+        $min = min(collection($data)->map(fn($v) => $this->floatval($v))->toList());
 
         if (strstr($options['table'], 'area') || strstr($options['table'], 'line')) {
             $data = array_combine(
                 array_keys($data),
-                (new Collection($data))
+                collection($data)
                     ->take(count($data) - 1)
-                    ->prepend([0])
+                    ->prependItem($min)
                     ->zip($data)
                     ->toList(),
             );
@@ -42,12 +43,12 @@ class ChartHelper extends Helper
                     'style' => is_array($v)
                         ? sprintf(
                             '--start: %f; --end: %f',
-                            round($this->floatval($v[0]) / $max, 3),
-                            round($this->floatval($v[1]) / $max, 3),
+                            round(($this->floatval($v[0]) - $min) / ($max - $min), 3),
+                            round(($this->floatval($v[1]) - $min) / ($max - $min), 3),
                         )
                         : sprintf(
                             '--size: %f',
-                            round($this->floatval($v) / $max, 3),
+                            round(($this->floatval($v) - $min) / ($max - $min), 3),
                         ),
                     ],
                 ),
@@ -61,7 +62,7 @@ class ChartHelper extends Helper
     }
 
     /**
-     * Take a value and returns a float-end
+     * Take a value and returns a float
      *
      * @param mixed $v
      * @return float
